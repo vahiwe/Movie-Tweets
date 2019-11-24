@@ -26,7 +26,7 @@ def home():
     if request.method == 'POST':
         moviename = request.form['movie_name']
         getmovies()
-        checkers = checkname()
+        checkers = checkname(moviename)
         if checkers == False:
             return render_template('pages/placeholder.home.html', checker=True)
         moviename = "#" + moviename + " #movie"

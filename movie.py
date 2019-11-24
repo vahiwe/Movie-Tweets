@@ -73,9 +73,9 @@ def getmovies():
     f.close()
 
 
-def checkname():
+def checkname(film):
     df = pd.read_csv('movies.dat', sep="::", header=None)
     df.columns = ['id', 'name', 'genre']
     df.drop(['id', 'genre'], axis=1, inplace=True)
     df['name'] = df['name'].str.replace(r" \(.*\)$", "")
-    return df['name'].str.contains("Train".lower(), case=False).any()
+    return df['name'].str.contains(film.lower(), case=False).any()
