@@ -6,10 +6,10 @@ from datetime import datetime
 from dateutil.parser import parse
 
 # You need to insert your own developer twitter credentials here
-consumer_key = "RVyAvHKRTUtVc4IQJJZfy1Uij"
-consumer_secret = "WPW6muWDJPeh3l96zJAokYuZPXUu9AnK8ydRnqzjbV18U1MG8t"
-access_token = '236123682-dPqKnQMXjjAORX0vGBuOHbkrz2dnZ92so04TDEmp'
-access_token_secret = 'qnryJkdu8SNPWHhnA2bUb6rdP5PDBBOpIQxBDzQg1bdvJ'
+consumer_key = ""
+consumer_secret = ""
+access_token = ''
+access_token_secret = ''
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
 
