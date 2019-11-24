@@ -1,0 +1,76 @@
+{% extends 'layouts/main.html' %}
+{% block title %}Home{% endblock %}
+{% block content %}
+
+<div class="page-header">
+    <h1>Type in the name of the movie correctly</h1>
+</div>
+<form method="post" class="form">
+    <input type="text" name="movie_name" placeholder="Name of movie" required="required" />
+    <input type="submit" class="btn btn-primary" value="Get Comments">
+</form>
+<br><br><br>
+
+{% if checker %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <h4>Movie not in Database. Make sure you typed in the name correctly.</h4>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% if empt %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <h4>Sorry we couldn't retrieve any comments for this movie.</h4>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% if check %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <h2 class="page-header">Comments</h2>
+            <section class="comment-list">
+                <!-- First Comment -->
+                {% for row in df.itertuples() %}
+                <article class="row">
+                    <div class="col-md-2 col-sm-2 hidden-xs">
+                        <figure class="thumbnail">
+                            <img class="img-responsive"
+                                src="http://www.tangoflooring.ca/wp-content/uploads/2015/07/user-avatar-placeholder.png" />
+                            <figcaption class="text-center">{{row.users}}</figcaption>
+                        </figure>
+                    </div>
+                    <div class="col-md-10 col-sm-10">
+                        <div class="panel panel-default arrow left">
+                            <div class="panel-body">
+                                <header class="text-left">
+                                    <div class="comment-user"><i class="fa fa-user"></i> {{row.users}}</div>
+                                    <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i>
+                                        {{row.stdates}}</time>
+                                </header>
+                                <div class="comment-post">
+                                    <p>
+                                        {{row.tweets}}</p>
+                                </div>
+                                <p class="text-right"><i class="fa fa-retweet"></i> {{row.retweets}} <i
+                                        class="fa fa-heart"></i>
+                                    {{row.likes}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+                {% endfor %}
+            </section>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
