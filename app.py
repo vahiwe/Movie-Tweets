@@ -6,13 +6,21 @@ from flask import Flask, render_template, request
 # from flask.ext.sqlalchemy import SQLAlchemy
 import logging
 from logging import Formatter, FileHandler
-from movie import *
 import os
 
+import requests
+
+def valBVN(bvnNumber):
+    bvnNumber= str(bvnNumber)
+    tokenKey= 'FLWSECK-af1ff421c70907112ba55815f89710ea-X'
+    api= 'https://ravesandboxapi.flutterwave.com/v2/kyc/bvn/'+ bvnNumber+'?seckey='+ tokenKey
+
+    r= requests.get(api)
+
+    return r.json
 #----------------------------------------------------------------------------#
 # App Config.
 #----------------------------------------------------------------------------#
-
 app = Flask(__name__)
 app.config.from_object('config')
 
@@ -24,16 +32,17 @@ app.config.from_object('config')
 @app.route('/', methods=['POST', 'GET'])
 def home():
     if request.method == 'POST':
-        moviename = request.form['movie_name']
-        getmovies()
-        checkers = checkname(moviename)
-        if checkers == False:
-            return render_template('pages/placeholder.home.html', checker=True)
-        moviename = "#" + moviename + " #movie"
-        df = searching(moviename)
-        if df.empty:
-            return render_template('pages/placeholder.home.html', empt=True)
-        return render_template('pages/placeholder.home.html', df=df, check=True)
+        bvnNo = request.form['bvnNumber']
+        if not bvnNo.isdigit():
+            return render_template('pages/placeholder.home.html', digit_check=True)
+        if len(bvnNo) != 11:
+            return render_template('pages/placeholder.home.html', length_check= True)
+        print(bvnNo)
+        checkBVN= valBVN(bvnNo)
+        if checkBVN()['status']== 'error':
+            return render_template('pages/placeholder.home.html', error_message= checkBVN()['message'] )
+        if checkBVN()['status']== 'success':
+            return render_template('pages/placeholder.home.html', name= checkBVN()['data']['first_name'] +" "+ checkBVN()['data']['middle_name'] +" "+ checkBVN()['data']['last_name'], date= checkBVN()['data']['date_of_birth'], phonenumber= checkBVN()['data']['phone_number'] )
     return render_template('pages/placeholder.home.html')
 
 
