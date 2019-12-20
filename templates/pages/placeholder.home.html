@@ -3,9 +3,14 @@
 {% block content %}
 
 <div class="page-header">
-    <h1>Please input right BVN Details</h1>
+    <h1>Please input Customer Details</h1>
 </div>
 <form method="post" class="form">
+    <input type= "text" name="firstname" placeholder="First Name" required="required" />
+    <input type="text" name="middlename" placeholder="Middle Name" required="required"/>
+    <input type="text" name="lastname" placeholder="Last Name" required="required"/>
+    <input type="date" name="dateofbirth" placeholder="Date of Birth" required="required"/>
+    <input type="text" name="phonenumber" placeholder="Phone Number" required="required" />
     <input type="text" name="bvnNumber" placeholder="BVN Number" required="required" />
     <input type="submit" class="btn btn-primary" value="Confirm">
 </form>
@@ -41,13 +46,41 @@
 </div>
 {% endif %}
 
-{% if name %}
+{% if success_message %}
 <div class="container">
     <div class="row">
         <div class="col-md-8">
-            <h4>Name: {{ name }}</h4><br>
-            <h4>Phone Number: {{ phonenumber }}</h4><br>
-            <h4>Date of Birth: {{ date }}</h4><br>
+            <h4>Customer has been successfully validated</h4><br>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% if not_message %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <h4>Customer Information not valid please input correct Information</h4><br>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% if phone_message %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <h4>Enter BVN verified phone number</h4><br>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% if name_message %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <h4>Name couldn't be verified. Try again </h4><br>
         </div>
     </div>
 </div>

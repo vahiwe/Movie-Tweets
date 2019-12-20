@@ -33,6 +33,11 @@ app.config.from_object('config')
 def home():
     if request.method == 'POST':
         bvnNo = request.form['bvnNumber']
+        firstName=request.form['firstname']
+        lastName=request.form['lastname']
+        middleName=request.form['middlename']
+        phoneNumber=request.form['phonenumber']
+        Dob=request.form['dateofbirth']
         if not bvnNo.isdigit():
             return render_template('pages/placeholder.home.html', digit_check=True)
         if len(bvnNo) != 11:
@@ -42,7 +47,15 @@ def home():
         if checkBVN()['status']== 'error':
             return render_template('pages/placeholder.home.html', error_message= checkBVN()['message'] )
         if checkBVN()['status']== 'success':
-            return render_template('pages/placeholder.home.html', name= checkBVN()['data']['first_name'] +" "+ checkBVN()['data']['middle_name'] +" "+ checkBVN()['data']['last_name'], date= checkBVN()['data']['date_of_birth'], phonenumber= checkBVN()['data']['phone_number'] )
+            if firstName.lower()== checkBVN()['data']['first_name'].lower() and lastName.lower()== checkBVN()['data']['last_name'].lower() and phoneNumber== checkBVN()['data']['phone_number']:
+                return render_template('pages/placeholder.home.html', success_message= True )
+            elif not phoneNumber== checkBVN()['data']['phone_number']:
+                return render_template('pages/placeholder.home.html', phone_message=True )
+            elif not firstName.lower()== checkBVN()['data']['first_name'].lower() or lastName.lower()== checkBVN()['data']['last_name'].lower():
+                return render_template('pages/placeholder.home.html', name_message=True )
+            
+            else:
+                return render_template('pages/placeholder.home.html', not_message= True )
     return render_template('pages/placeholder.home.html')
 
 
