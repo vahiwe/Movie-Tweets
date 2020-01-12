@@ -3,8 +3,10 @@ Flask-SQLAlchemy
 Flask-WTF
 WTForms
 coverage
-requests
+tweepy
 pandas
 gunicorn
 flask
-
+# ecdsa
+# paramiko
+# pycrypto

@@ -3,87 +3,74 @@
 {% block content %}
 
 <div class="page-header">
-    <h1>Please input Customer Details</h1>
+    <h1>Type in the name of the movie correctly</h1>
 </div>
 <form method="post" class="form">
-    <input type= "text" name="firstname" placeholder="First Name" required="required" />
-    <input type="text" name="middlename" placeholder="Middle Name" required="required"/>
-    <input type="text" name="lastname" placeholder="Last Name" required="required"/>
-    <input type="date" name="dateofbirth" placeholder="Date of Birth" required="required"/>
-    <input type="text" name="phonenumber" placeholder="Phone Number" required="required" />
-    <input type="text" name="bvnNumber" placeholder="BVN Number" required="required" />
-    <input type="submit" class="btn btn-primary" value="Confirm">
+    <input type="text" name="movie_name" placeholder="Name of movie" required="required" />
+    <input type="submit" class="btn btn-primary" value="Get Comments">
 </form>
 <br><br><br>
 
-{% if digit_check %}
+{% if checker %}
 <div class="container">
     <div class="row">
         <div class="col-md-8">
-            <h4>Please enter only digits</h4>
+            <h4>Movie not in Database. Make sure you typed in the name correctly.</h4>
         </div>
     </div>
 </div>
 {% endif %}
 
-{% if length_check %}
+{% if empt %}
 <div class="container">
     <div class="row">
         <div class="col-md-8">
-            <h4>Digits of number incomplete, should contain 11 digits</h4>
+            <h4>Sorry we couldn't retrieve any comments for this movie.</h4>
         </div>
     </div>
 </div>
 {% endif %}
 
-{% if error_message %}
+{% if check %}
 <div class="container">
     <div class="row">
         <div class="col-md-8">
-            <h4>{{ error_message }}</h4>
+            <h2 class="page-header">Comments</h2>
+            <section class="comment-list">
+                <!-- First Comment -->
+                {% for row in df.itertuples() %}
+                <article class="row">
+                    <div class="col-md-2 col-sm-2 hidden-xs">
+                        <figure class="thumbnail">
+                            <img class="img-responsive"
+                                src="http://www.tangoflooring.ca/wp-content/uploads/2015/07/user-avatar-placeholder.png" />
+                            <figcaption class="text-center">{{row.users}}</figcaption>
+                        </figure>
+                    </div>
+                    <div class="col-md-10 col-sm-10">
+                        <div class="panel panel-default arrow left">
+                            <div class="panel-body">
+                                <header class="text-left">
+                                    <div class="comment-user"><i class="fa fa-user"></i> {{row.users}}</div>
+                                    <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i>
+                                        {{row.stdates}}</time>
+                                </header>
+                                <div class="comment-post">
+                                    <p>
+                                        {{row.tweets}}</p>
+                                </div>
+                                <p class="text-right"><i class="fa fa-retweet"></i> {{row.retweets}} <i
+                                        class="fa fa-heart"></i>
+                                    {{row.likes}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+                {% endfor %}
+            </section>
         </div>
     </div>
 </div>
 {% endif %}
-
-{% if success_message %}
-<div class="container">
-    <div class="row">
-        <div class="col-md-8">
-            <h4>Customer has been successfully validated</h4><br>
-        </div>
-    </div>
-</div>
-{% endif %}
-
-{% if not_message %}
-<div class="container">
-    <div class="row">
-        <div class="col-md-8">
-            <h4>Customer Information not valid please input correct Information</h4><br>
-        </div>
-    </div>
-</div>
-{% endif %}
-
-{% if phone_message %}
-<div class="container">
-    <div class="row">
-        <div class="col-md-8">
-            <h4>Enter BVN verified phone number</h4><br>
-        </div>
-    </div>
-</div>
-{% endif %}
-
-{% if name_message %}
-<div class="container">
-    <div class="row">
-        <div class="col-md-8">
-            <h4>Name couldn't be verified. Try again </h4><br>
-        </div>
-    </div>
-</div>
-{% endif %}
-
 {% endblock %}
